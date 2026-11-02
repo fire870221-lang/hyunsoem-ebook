@@ -373,7 +373,12 @@ function refresh(){
   $("coLbl").textContent = n===6 ? "6권 전체 패키지" : "선택한 권수 "+n+"권";
   $("coSum").textContent = won(total());
   $("coCard").style.display = (CFG.tossClientKey && CFG.api) ? "" : "none";
-  $("coNote").textContent = "카드 결제는 즉시 이메일로 전자책이 발송됩니다. 계좌이체는 주문 접수 후 안내되는 계좌로 입금하시면 확인 후 발송됩니다.";
+  var hasCard = !!(CFG.tossClientKey && CFG.api);
+  $("coBank").className = hasCard ? "btn ghost" : "btn primary";
+  $("coBank").textContent = hasCard ? "계좌이체로 주문" : "주문하고 입금 계좌 확인";
+  $("coNote").textContent = hasCard
+    ? "카드 결제는 즉시 이메일로 전자책이 발송됩니다. 계좌이체는 주문 접수 후 안내되는 계좌로 입금하시면 확인 후 발송됩니다."
+    : "주문 접수 후 안내되는 계좌로 입금하시면, 입금 확인 후 이메일로 전자책(PDF)이 발송됩니다.";
 }
 function openCo(sku){
   $("coStep1").style.display=""; $("coStep2").style.display="none";
@@ -419,7 +424,7 @@ $("coF").addEventListener("submit",function(e){
       $("coStep1").style.display="none"; $("coStep2").style.display="";
     })
     .catch(function(){ toast("네트워크 오류입니다. 잠시 후 다시 시도해 주세요") })
-    .then(function(){ btn.disabled=false; btn.textContent="계좌이체로 주문" });
+    .then(function(){ btn.disabled=false; btn.textContent=(CFG.tossClientKey&&CFG.api)?"계좌이체로 주문":"주문하고 입금 계좌 확인" });
 });
 </script>
 </body>
