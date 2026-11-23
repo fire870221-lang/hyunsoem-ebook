@@ -151,6 +151,25 @@ footer{border-top:1px solid var(--line);padding:36px 0 60px;color:var(--muted);f
 footer p+p{margin-top:8px}
 .todo{background:#fff3cd;color:#664d03;padding:2px 6px;border-radius:4px;font-size:12px;font-weight:700}
 </style>
+<!-- Google Analytics 4 (현소엠 전자책 사이트) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EGF5P8LNQ6"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-EGF5P8LNQ6');
+/* 구매·문의 동선 클릭 추적: 크몽(구매), 카카오 오픈채팅(문의), 리틀리, SNS */
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a[href]');
+  if(!a||typeof gtag!=='function')return;
+  var h=a.href||'',t=(a.textContent||'').trim().slice(0,40),m;
+  if((m=h.match(/kmong\.com\/gig\/(\d+)/))){gtag('event','click_kmong',{gig_id:m[1],link_text:t,link_url:h});}
+  else if(h.indexOf('open.kakao.com')>-1){gtag('event','click_kakao_inquiry',{link_text:t,link_url:h});}
+  else if(h.indexOf('litt.ly')>-1){gtag('event','click_littly',{link_text:t,link_url:h});}
+  else if(/instagram\.com|threads\.net|youtube\.com/.test(h)){gtag('event','click_social',{link_text:t,link_url:h});}
+  else if(/blog\.naver\.com|tistory\.com|cafe\.naver\.com/.test(h)){gtag('event','click_content_site',{link_text:t,link_url:h});}
+},true);
+</script>
 </head>
 <body>
 
